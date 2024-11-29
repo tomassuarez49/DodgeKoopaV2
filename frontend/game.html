@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodge Koopa - Juego</title>
+    <link rel="stylesheet" href="game.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+<body>
+    <div id="topContainer">
+        <button onclick="window.location.href='/'" class="menuButton">Volver al menú</button>
+    </div>
+
+    <div id="mainContainer">
+        <div id="gameArea">
+            <div id="grid" >
+            </div>
+        </div>
+        <div id="chatContainer">
+            <div id="roomCode"></div>
+            <div id="playerName">Jugador:</div>
+            <textarea id="chat" readonly></textarea>
+            <div id="messageContainer">
+                <input type="text" id="message" placeholder="Escribe un mensaje">
+                <button onclick="sendMessage()">Enviar</button>
+            </div>
+            <button id="readyButton" onclick="toggleReady()" style="margin-top: 10px; padding: 10px; border-radius: 5px; border: none; background-color: #007bff; color: white; cursor: pointer;">Listo</button>
+
+            <div id="countdown" style="display: none; font-size: 24px; color: white; text-align: center;"></div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

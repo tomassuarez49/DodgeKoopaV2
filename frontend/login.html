@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodge Koopa - Iniciar Sesión</title>
+    <link rel="icon" href="./images/favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <script>
+        let isGameStarted = false; // Variable para el estado del juego
+
+        // Conectarse al WebSocket para verificar el estado del juego
+        const socket = new WebSocket("ws://localhost:8080");
+
+        socket.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.type === "gameStatusUpdate") {
+                    isGameStarted = data.isGameStarted;
+
+                    if (isGameStarted) {
+                        document.getElementById("gameStartedMessage").style.display = "block";
+                        document.getElementById("submitButton").disabled = true; // Deshabilitar el botón si el juego ya comenzó
+                    }
+                }
+            } catch (error) {
+                console.error("Error procesando mensaje del servidor:", error);
+            }
+        };
+
+        // Manejar la entrada de texto para deshabilitar caracteres no permitidos
+        function handleInput() {
+            const usernameInput = document.querySelector('input[type="text"]');
+            const submitButton = document.getElementById("submitButton");
+
+            // Validar caracteres permitidos
+            usernameInput.value = usernameInput.value.replace(/[^a-zA-Z0-9_.-]/g, "");
+            // Habilitar el botón solo si hay un nombre válido
+            submitButton.disabled = usernameInput.value.trim() === "" || isGameStarted;
+        }
+
+        // Manejar el envío del formulario
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            if (isGameStarted) {
+                document.getElementById("gameStartedMessage").style.display = "block";
+                return;
+            }
+
+            const usernameInput = document.querySelector('input[type="text"]');
+            const username = usernameInput.value.trim();
+
+            if (!username) {
+                alert("Por favor, ingresa un nombre válido.");
+                return;
+            }
+
+            // Guardar el nombre en localStorage
+            localStorage.setItem('username', username);
+
+            // Redirigir según la opción seleccionada
+            const selectedOption = document.getElementById("gameOption").value;
+            if (selectedOption === "play") {
+                window.location.href = "./game.html";
+            } else if (selectedOption === "join") {
+                window.location.href = "./join.html";
+            } else if (selectedOption === "create") {
+                window.location.href = "./create_game.html";
+            }
+        }
+
+        window.onload = () => {
+            // Asegurarse de que el botón esté deshabilitado al cargar la página
+            document.getElementById("submitButton").disabled = true;
+        };
+    </script>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+    <form onsubmit="handleSubmit(event)">
+        <!-- Campo para ingresar el nombre del jugador -->
+        <input type="text" placeholder="Ingresa tu nombre" oninput="handleInput()" required />
+        <!-- Opciones del juego -->
+        <select id="gameOption">
+            <option value="play">Jugar</option>
+            <option value="join">Unirse</option>
+            <option value="create">Crear</option>
+        </select>
+        <!-- Botones de acción -->
+        <div class="button-container">
+            <button id="submitButton" type="submit">Iniciar Sesión</button>
+            <button type="button" onclick="location.href='./index.html'">Volver a la página principal</button>
+        </div>
+    </form>
+    <!-- Mensaje si el juego ya ha comenzado -->
+    <div id="gameStartedMessage" style="display: none; color: red; font-weight: bold; text-align: center;">
+        Esta partida ya está en curso. Espera a que termine para unirte.
+    </div>
+</body>
+</html>

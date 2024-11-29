@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodge Koopa - Página Principal</title>
+    <link rel="icon" href="./images/favicon.png" type="image/png"> <!-- Ajusta la ruta según tu estructura -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- Fuente de Super Mario -->
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('./images/background_gif.gif'); /* Ruta de tu imagen de fondo */
+            background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-color: #f0f0f0; /* Color de fondo */
+            font-family: 'Press Start 2P', cursive;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: white; /* Color del título */
+            font-size: 36px; /* Tamaño de la fuente */
+            text-shadow: 2px 2px 0px black; /* Borde negro grueso */
+            animation: blink 1s infinite; /* Animación de titilado */
+        }
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1; /* Totalmente visible */
+            }
+            50% {
+                opacity: 0; /* Totalmente invisible */
+            }
+        }
+        .button-container {
+            display: flex; /* Utiliza flexbox para alinear los botones */
+            gap: 10px; /* Espacio entre los botones */
+            margin-top: 20px; /* Espacio arriba de los botones */
+        }
+        button {
+            padding: 15px 30px; /* Aumenta el tamaño del botón */
+            font-size: 18px; /* Tamaño de la fuente del botón */
+            color: white;
+            background-color: #28a745; /* Color verde del botón */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Press Start 2P', cursive; /* Usa la fuente de Super Mario */
+        }
+        button:hover {
+            background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+        }
+    </style>
+</head>
+<body>
+<h1>Dodge Koopa</h1>
+<h1>Bienvenido a la página principal</h1>
+
+<div class="button-container">
+    <button onclick="location.href='./login.html'">Iniciar Sesión</button>
+    <button onclick="location.href='/register'">Registrarse</button>
+</div>
+</body>
+</html>
